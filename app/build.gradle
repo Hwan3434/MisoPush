@@ -6,10 +6,10 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 5
-        versionName "1.1.1"
+        versionName "1.1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -31,11 +31,20 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
 
+    //text
+//    androidTestImplementation 'com.android/support.test:runner:0.4.1'
+//    androidTestImplementation 'com.android/support.test:rules:0.4.1'
+////    androidTestImplementation 'com.android/support.test.espresso:espresso-core:2.2.1'
+//    androidTestImplementation 'com.android/support:support-annotations:23.1.1'
+
+
+
+    // firebase
     implementation 'com.google.firebase:firebase-messaging:20.1.5'
     implementation 'com.google.firebase:firebase-core:17.3.0'
 
     // okhttp3
-    implementation 'com.squareup.okhttp3:okhttp:4.0.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.0.1'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.0.1'
 

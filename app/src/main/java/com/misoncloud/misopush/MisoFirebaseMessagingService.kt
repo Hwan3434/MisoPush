@@ -15,14 +15,12 @@ class MisoFirebaseMessagingService : FirebaseMessagingService() {
         // 못구하는건 앱아이디, 유저키
         // 앱아이디가 없으면 던지는게 무의미한뎅
 
-
-
     }
 
     // 메세지 수신
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
-        MisoPush.onRecvPush(p0);
+        MisoPush.onRecvPush();
         // 미소서버로 일단 수신완료 날리기 ~
         // 이건 쌉가능 ~
 

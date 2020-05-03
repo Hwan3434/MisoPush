@@ -1,21 +1,16 @@
 package com.misoncloud.misopush
 
 import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.util.Log
-import android.widget.Toast
 import com.google.firebase.messaging.RemoteMessage
-import com.misoncloud.misopush.controller.TempControllerInterface
-import com.misoncloud.misopush.model.temp.Contributors
+import com.misoncloud.misopush.model.requestmessage.RequestMessageSaveModel
+import com.misoncloud.misopush.model.sample.SampleJsonModel
+import com.misoncloud.misopush.model.target.TargetSaveModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
-import java.util.concurrent.TimeUnit
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 /**
  * 2020. 04. 06 메모
@@ -49,60 +44,50 @@ class MisoPush private constructor() {
                     // http connection 기본 세팅 작업
 
                 }
-        }
-
-        object KotlinOKHttpRxJavaManager {
-
-
-            val CONNECTION_TIMEOUT:Long = 10
-            val WRITE_TIMEOUT: Long = 10
-            val READ_TIMEOUT: Long = 10
-            val API_URL: String = "https://api.github.com/"
-
-            val MISO_URL: String = "http://192.168.0.101:8080/"
-            var mOKHttpClient: OkHttpClient
-            var mRetrofit: Retrofit
-            var mTempControllerInterface: TempControllerInterface
-
-
-            init {
-
-                val httpLoggingInterceptor = HttpLoggingInterceptor()
-                httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-
-                mOKHttpClient = OkHttpClient().newBuilder().apply {
-
-                    addInterceptor(httpLoggingInterceptor)
-                    connectTimeout(CONNECTION_TIMEOUT, TimeUnit.SECONDS)
-                    writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
-                    readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
-
-                }.build()
-
-
-                mRetrofit = Retrofit.Builder().apply {
-                    baseUrl(API_URL)
-                    client(mOKHttpClient)
-                    addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    addConverterFactory(GsonConverterFactory.create())
-                }.build()
-
-                mTempControllerInterface = mRetrofit.create()
-
-            }
-
-            fun getInstance(): TempControllerInterface {
-                return mTempControllerInterface
-            }
-
 
         }
+
+
 
 
 
         /**
          *
          */
+        @SuppressLint("CheckResult")
+        fun insertTarget(){
+
+            val adapter = WebClient.getInstance().getTargetController()
+
+            var target:TargetSaveModel = TargetSaveModel(12,"b","c",0,123)
+
+            adapter.targetInsert(target)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnError {
+
+                    System.out.println("하이류 123123")
+
+                    it.printStackTrace()
+
+                }
+                .unsubscribeOn(Schedulers.io())
+                .onErrorReturn { t: Throwable ->
+
+                    // 500 : @CommonAspectNotTarget ( 인증안된 요청 - 로그인 안해서 웹 호출 거부 )
+
+                    System.out.println("on error : " + t.message)
+
+                    TargetSaveModel()
+                }
+                .subscribe { result ->
+
+                    System.out.println("result : " + result.toString())
+
+                }
+
+
+        }
 
         /**
          * 확인 후 서버로 AppID, MessageKey를 전달해줘야합니다.
@@ -139,27 +124,43 @@ class MisoPush private constructor() {
          */
         // 앱아이디, 앱 버전, 유저키, 디바이스토큰, 버전 필요
         @SuppressLint("CheckResult")
-        fun RegisterMember(misoAppKey: String, deviceToken: String){
+        fun TestBySample(misoAppKey: String, deviceToken: String){
 
-            val adapter = KotlinOKHttpRxJavaManager.getInstance()
+            val adapter = WebClient.getInstance().getSampleController()
 
-            adapter.requestContributors("ldhcjs", "GetPackagesName")
+            var ss:ArrayList<String> = ArrayList<String>()
+
+            ss.add("아니")
+            ss.add("rkfk")
+            ss.add("말이야 개야?")
+
+//            var sss:SendSample = SendSample("aaa",1,2.1, false, "2011-04-24T10:11:10:35.520Z", ss, SendSample.SapleInner_Object(9, "Jh"))
+            var sss:SampleJsonModel = SampleJsonModel("aaa",1,2.1, false, "2011-04-24 10:11:10:35.520", ss, SampleJsonModel.SampleJsonModelItem(9, "Jh"))
+
+
+            adapter.sampleJson(sss)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnError {
-                    Log.d(TAG, "doOnError")
+
+                    System.out.println("하이류 123123")
+
+                    it.printStackTrace()
+
                 }
                 .unsubscribeOn(Schedulers.io())
                 .onErrorReturn { t: Throwable ->
-                    Log.d(TAG, "onErrorReturn : " + t.message)
-                    arrayOf(Contributors())
+
+                    // 500 : @CommonAspectNotTarget ( 인증안된 요청 - 로그인 안해서 웹 호출 거부 )
+
+                    System.out.println("on error : " + t.message)
+
+                    SampleJsonModel()
                 }
                 .subscribe { result ->
-                    if ("User" == result[0].getType()) {
-                        Log.d(TAG, "subscribe good")
-                    } else {
-                        Log.d(TAG, "subscribe bad")
-                    }
+
+                    System.out.println("result : " + result.toString())
+
                 }
 
         }
@@ -180,8 +181,40 @@ class MisoPush private constructor() {
          * 푸시를 받으면 받았다고 리턴해주는 함수
          */
         // 메세지키를 통으로 넣어주자.
-        fun onRecvPush(data : RemoteMessage){
+        @SuppressLint("CheckResult")
+        fun onRecvPush(){
 
+            System.out.println("method : onRecvPush")
+
+
+            val adapter = WebClient.getInstance().getRequestMessageControllerInterface()
+
+            var sss:RequestMessageSaveModel = RequestMessageSaveModel(0,"uk","mk", Date())
+
+            adapter.requestMessageInsert(sss)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .doOnError {
+
+                    System.out.println("하이류 123123")
+
+                    it.printStackTrace()
+
+                }
+                .unsubscribeOn(Schedulers.io())
+                .onErrorReturn { t: Throwable ->
+
+                    // 500 : @CommonAspectNotTarget ( 인증안된 요청 - 로그인 안해서 웹 호출 거부 )
+
+                    System.out.println("on error : " + t.message)
+
+                    RequestMessageSaveModel()
+                }
+                .subscribe { result ->
+
+                    System.out.println("result : " + result.toString())
+
+                }
 
 
         }
