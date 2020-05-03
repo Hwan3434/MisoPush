@@ -29,14 +29,16 @@ import kotlin.collections.ArrayList
  *
  */
 
-class MisoPush private constructor() {
+open class MisoPush private constructor() {
 
 
     companion object Client {
 
-        @Volatile private var instance: MisoPush? = null
+        @Volatile
+        private var instance: MisoPush? = null
 
-        @JvmStatic fun getInstance(): MisoPush =
+        @JvmStatic
+        fun getInstance(): MisoPush =
             instance ?: synchronized(this) {
                 instance ?: MisoPush().also {
                     instance = it
@@ -45,7 +47,8 @@ class MisoPush private constructor() {
 
                 }
 
-        }
+            }
+    }
 
 
 
@@ -221,5 +224,3 @@ class MisoPush private constructor() {
 
     }
 
-
-}

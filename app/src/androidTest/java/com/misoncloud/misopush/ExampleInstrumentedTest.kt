@@ -22,7 +22,7 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
 
-        MisoPush.onRecvPush()
+        MisoPush.getInstance().onRecvPush()
 
 
 

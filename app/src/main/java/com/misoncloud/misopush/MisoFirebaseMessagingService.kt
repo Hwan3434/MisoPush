@@ -20,7 +20,6 @@ open class MisoFirebaseMessagingService : FirebaseMessagingService() {
     // 메세지 수신
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
-        MisoPush.onRecvPush()
         // 미소서버로 일단 수신완료 날리기 ~
         // 이건 쌉가능 ~
 
