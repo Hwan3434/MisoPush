@@ -5,7 +5,7 @@ import com.google.firebase.messaging.RemoteMessage
 
 
 // 요녀석을 misopush를 받을려면 요녀석을 상속해서 사용 해야합니다. ~
-class MisoFirebaseMessagingService : FirebaseMessagingService() {
+open class MisoFirebaseMessagingService : FirebaseMessagingService() {
 
 
     // 디바이스토큰 수신
@@ -20,7 +20,7 @@ class MisoFirebaseMessagingService : FirebaseMessagingService() {
     // 메세지 수신
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
-        MisoPush.onRecvPush();
+        MisoPush.onRecvPush()
         // 미소서버로 일단 수신완료 날리기 ~
         // 이건 쌉가능 ~
 
