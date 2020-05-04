@@ -1,8 +1,6 @@
 package com.misoncloud.misopush.model.requestmessage
 
-import com.google.android.gms.common.util.JsonUtils
 import com.google.gson.annotations.SerializedName
-import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -11,7 +9,7 @@ class RequestMessageSaveModel {
 
 
     @SerializedName("idno")
-    private var idno: Int = 0;
+    private var idno: Int = 0
 
     @SerializedName("user_key")
     private var userKey: String? = null

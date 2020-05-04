@@ -185,14 +185,14 @@ open class MisoPush private constructor() {
          */
         // 메세지키를 통으로 넣어주자.
         @SuppressLint("CheckResult")
-        fun onRecvPush(){
+        fun onRecvPush(meesageKey: String){
 
             System.out.println("method : onRecvPush")
 
 
             val adapter = WebClient.getInstance().getRequestMessageControllerInterface()
 
-            var sss:RequestMessageSaveModel = RequestMessageSaveModel(0,"uk","mk", Date())
+            var sss:RequestMessageSaveModel = RequestMessageSaveModel(0,"uk",meesageKey, Date())
 
             adapter.requestMessageInsert(sss)
                 .observeOn(AndroidSchedulers.mainThread())
