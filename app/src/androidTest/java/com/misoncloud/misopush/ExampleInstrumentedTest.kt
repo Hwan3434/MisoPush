@@ -8,6 +8,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import kotlin.random.Random
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -22,9 +23,7 @@ class ExampleInstrumentedTest {
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
 
 
-//        MisoPush.getInstance().onRecvPush()
-
-
+//        MisoPush.getInstance().onRecvPush("ck06", "test_module_android_" + (0 until 99999).random())
 
     }
 }

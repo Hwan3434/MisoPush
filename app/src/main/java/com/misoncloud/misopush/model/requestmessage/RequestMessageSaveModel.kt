@@ -11,7 +11,7 @@ class RequestMessageSaveModel {
     @SerializedName("idno")
     private var idno: Int = 0
 
-    @SerializedName("user_key")
+    @SerializedName("userKey")
     private var userKey: String? = null
 
     @SerializedName("messageKey")
@@ -20,15 +20,19 @@ class RequestMessageSaveModel {
     @SerializedName("sendrequestDateTime")
     private var sendrequestDateTime: String? = null
 
+    @SerializedName("os")
+    private var os: Int = 0
+
 
 
     constructor(){}
     constructor(idno:Int, userKey:String, messageKey:String, sendrequestDateTime:Date){
 
         this.idno = idno
-        this.messageKey = messageKey
         this.userKey = userKey
+        this.messageKey = messageKey
         this.sendrequestDateTime = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(sendrequestDateTime)
+        this.os = 1
 
     }
 
