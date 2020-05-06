@@ -31,7 +31,7 @@ class WebClient private constructor() {
     // 집 : 192.168.219.179
     // 회사 : 192.168.0.101
 
-    val MISO_URL: String = "http://192.168.0.97:8080/"
+    val MISO_URL: String = "http://172.20.10.2:8080/"
     var mOKHttpClient: OkHttpClient
     var mRetrofit: Retrofit
     var mSampleControllerInterface: SampleControllerInterface
