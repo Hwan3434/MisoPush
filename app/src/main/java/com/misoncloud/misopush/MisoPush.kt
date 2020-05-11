@@ -192,7 +192,7 @@ open class MisoPush private constructor() {
 
             var data:ResponseFromDeviceMessageSaveModel = ResponseFromDeviceMessageSaveModel(0,userKey, meesageKey, Date())
 
-            adapter.requestMessageInsert(data)
+            adapter.responseFromDeviceMessageInsert(data)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .doOnError {
