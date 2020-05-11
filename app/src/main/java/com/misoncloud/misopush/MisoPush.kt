@@ -2,8 +2,7 @@ package com.misoncloud.misopush
 
 import android.annotation.SuppressLint
 import android.util.Log
-import com.google.firebase.messaging.RemoteMessage
-import com.misoncloud.misopush.model.requestmessage.RequestMessageSaveModel
+import com.misoncloud.misopush.model.requestmessage.ResponseFromDeviceMessageSaveModel
 import com.misoncloud.misopush.model.sample.SampleJsonModel
 import com.misoncloud.misopush.model.target.TargetSaveModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -58,11 +57,11 @@ open class MisoPush private constructor() {
          *
          */
         @SuppressLint("CheckResult")
-        fun insertTarget(){
+        fun insertTarget(appId:String, userKey:String, deviceToken:String, version:String){
 
             val adapter = WebClient.getInstance().getTargetController()
 
-            var target:TargetSaveModel = TargetSaveModel(12,"b","c",0,123)
+            var target:TargetSaveModel = TargetSaveModel(appId, userKey,deviceToken, 1,version)
 
             adapter.targetInsert(target)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -85,7 +84,7 @@ open class MisoPush private constructor() {
                 }
                 .subscribe { result ->
 
-                    System.out.println("result : " + result.toString())
+                    System.out.println("result !! : " + result.toString())
 
                 }
 
@@ -191,7 +190,7 @@ open class MisoPush private constructor() {
 
             val adapter = WebClient.getInstance().getRequestMessageControllerInterface()
 
-            var data:RequestMessageSaveModel = RequestMessageSaveModel(0,userKey, meesageKey, Date())
+            var data:ResponseFromDeviceMessageSaveModel = ResponseFromDeviceMessageSaveModel(0,userKey, meesageKey, Date())
 
             adapter.requestMessageInsert(data)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -210,7 +209,7 @@ open class MisoPush private constructor() {
 
                     System.out.println("on error : " + t.message)
 
-                    RequestMessageSaveModel()
+                    ResponseFromDeviceMessageSaveModel()
                 }
                 .subscribe { result ->
 

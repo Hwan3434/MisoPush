@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class RequestMessageSaveModel {
+class ResponseFromDeviceMessageSaveModel {
 
 
     @SerializedName("idno")

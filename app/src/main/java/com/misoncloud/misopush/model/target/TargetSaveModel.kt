@@ -6,11 +6,8 @@ import com.google.gson.annotations.SerializedName
 class TargetSaveModel {
 
 
-    @SerializedName("idno")
-    private var idno: Int = 0;
-
-    @SerializedName("appIdno")
-    private var appIdno: Int? = null
+    @SerializedName("appId")
+    private var appId: String? = null
 
     @SerializedName("userKey")
     private var userKey: String? = null
@@ -22,13 +19,13 @@ class TargetSaveModel {
     private var os: Int? = null
 
     @SerializedName("versionId")
-    private var versionId: Int? = null
+    private var versionId: String? = null
 
 
     constructor(){}
-    constructor(appIdno:Int, userKey:String, deviceToken:String, os:Int, versionId:Int){
+    constructor(appId:String, userKey:String, deviceToken:String, os:Int, versionId:String){
 
-        this.appIdno = appIdno
+        this.appId = appId
         this.userKey = userKey
         this.deviceToken = deviceToken
         this.os = os
@@ -37,14 +34,10 @@ class TargetSaveModel {
     }
 
     override fun toString(): String {
-        return "idno : " + idno + " / " +
-                "appId : " + appIdno + " / " +
+        return "appId : " + appId + " / " +
                 "userKey : " + userKey + " / " +
                 "os : " + os + " / " +
                 "versionId : " + versionId
     }
-
-
-
 
 }
