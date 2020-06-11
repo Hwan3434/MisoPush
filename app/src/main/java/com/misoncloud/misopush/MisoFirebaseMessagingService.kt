@@ -23,11 +23,8 @@ open class MisoFirebaseMessagingService : FirebaseMessagingService() {
         var messageKey = p0.data.get("messageKey")
 
         if(messageKey.equals("onKeepAlive")){
-            MisoPush.getInstance().keepAlive("appId", "dtk")
-
-            if(MisoPush.getInstance().firbaseListener != null) {
-                MisoPush.getInstance().firbaseListener?.onKeepAlive("")
-            }
+            MisoPush.getInstance().keepAlive("appId")
+            onKeepAlive("");
         }else {
 
             // 1. messageKey = {"misoMessageKey" : "messagekey", "dataMessageKey" : "messageKey" }
@@ -36,12 +33,16 @@ open class MisoFirebaseMessagingService : FirebaseMessagingService() {
             // 사용자가 key값을 messageKey를 안쓰면 2번으로 넘어옵니다.
             MisoPush.getInstance().onRecvPush("",messageKey.toString())
             p0.data.remove("messageKey")
-            if(MisoPush.getInstance().firbaseListener != null) {
-                MisoPush.getInstance().firbaseListener?.onMisoMessageReceived(p0.data)
-            }
+            onMisoMessageReceived(messageKey.toString(), p0.data)
 
         }
     }
 
+    fun onKeepAlive(keep:String){
 
+    }
+
+    fun onMisoMessageReceived(messageKey:String, map:Map<String, String>){
+
+    }
 }

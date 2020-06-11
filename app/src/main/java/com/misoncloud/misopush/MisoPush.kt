@@ -34,7 +34,6 @@ import kotlin.collections.ArrayList
 open class MisoPush private constructor() {
 
 
-    var firbaseListener:MisoFirebaseInterface? = null;
     var mainListener:MisoListener? = null
     var userKey:String = ""
     var appId:String = ""
@@ -89,8 +88,8 @@ open class MisoPush private constructor() {
         }
     }
 
-    fun keepAlive(appId:String, deviceToken:String){
-        keepAlive(appId, deviceToken, null)
+    fun keepAlive(keep:String){
+        keepAlive(appId, null)
     }
 
     fun insertTarget(appId:String, userKey:String, deviceToken:String, version:String) {
@@ -106,11 +105,11 @@ open class MisoPush private constructor() {
     }
 
     @SuppressLint("CheckResult")
-    fun keepAlive(appId:String, deviceToken:String, listener: MisoListener?) {
+    fun keepAlive(keep:String, listener: MisoListener?) {
 
         val adapter = WebClient.getInstance().getCheckControllerInterface()
 
-        var target:KeepAliveRequestModel = KeepAliveRequestModel(appId, deviceToken)
+        var target:KeepAliveRequestModel = KeepAliveRequestModel(appId, keep)
 
         adapter.keepAlive(target)
             .observeOn(AndroidSchedulers.mainThread())
