@@ -11,8 +11,6 @@ open class MisoFirebaseMessagingService : FirebaseMessagingService() {
     // 디바이스토큰 수신
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
-//        유저키도 우리가 만드는게 아니다잉
-//        MisoPush.getInstance().insertTarget(appId, userKey, deviceToken, version)
 
     }
 
@@ -38,11 +36,11 @@ open class MisoFirebaseMessagingService : FirebaseMessagingService() {
         }
     }
 
-    fun onKeepAlive(keep:String){
+    open fun onKeepAlive(keep:String){
 
     }
 
-    fun onMisoMessageReceived(messageKey:String, map:Map<String, String>){
+    open fun onMisoMessageReceived(messageKey:String, map:Map<String, String>){
 
     }
 }
