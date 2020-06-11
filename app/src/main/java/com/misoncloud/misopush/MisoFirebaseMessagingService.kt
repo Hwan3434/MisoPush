@@ -7,13 +7,6 @@ import com.google.firebase.messaging.RemoteMessage
 // 요녀석을 misopush를 받을려면 요녀석을 상속해서 사용 해야합니다. ~
 open class MisoFirebaseMessagingService : FirebaseMessagingService() {
 
-    var misoFirebaseInterface:MisoFirebaseInterface
-        get() {
-            return misoFirebaseInterface;
-        }
-        set(value) {
-            misoFirebaseInterface = value
-        }
 
     // 디바이스토큰 수신
     override fun onNewToken(p0: String) {
@@ -31,7 +24,10 @@ open class MisoFirebaseMessagingService : FirebaseMessagingService() {
 
         if(messageKey.equals("onKeepAlive")){
             MisoPush.getInstance().keepAlive("appId", "dtk")
-            misoFirebaseInterface.onKeepAlive("")// deviceToken 쓰자
+
+            if(MisoPush.getInstance().firbaseListener != null) {
+                MisoPush.getInstance().firbaseListener?.onKeepAlive("")
+            }
         }else {
 
             // 1. messageKey = {"misoMessageKey" : "messagekey", "dataMessageKey" : "messageKey" }
@@ -40,7 +36,9 @@ open class MisoFirebaseMessagingService : FirebaseMessagingService() {
             // 사용자가 key값을 messageKey를 안쓰면 2번으로 넘어옵니다.
             MisoPush.getInstance().onRecvPush("",messageKey.toString())
             p0.data.remove("messageKey")
-            misoFirebaseInterface.onMisoMessageReceived(p0.data)
+            if(MisoPush.getInstance().firbaseListener != null) {
+                MisoPush.getInstance().firbaseListener?.onMisoMessageReceived(p0.data)
+            }
 
         }
     }

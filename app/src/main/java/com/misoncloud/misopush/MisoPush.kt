@@ -34,6 +34,7 @@ import kotlin.collections.ArrayList
 open class MisoPush private constructor() {
 
 
+    var firbaseListener:MisoFirebaseInterface? = null;
     var mainListener:MisoListener? = null
     var userKey:String = ""
     var appId:String = ""
