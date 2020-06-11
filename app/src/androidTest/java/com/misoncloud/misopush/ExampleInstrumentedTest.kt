@@ -19,8 +19,13 @@ class ExampleInstrumentedTest {
 
 
 //        MisoPush.getInstance().onRecvPush("ck06", "test_module_android_" + (0 until 99999).random())
-        MisoPush.getInstance().insertTarget("b5508f8a848311eabc550242ac130003", "uk", "tk", "1.1.1")
 
+        MisoPush.getInstance().keepAlive("appId", "dtk")
+
+
+//        MisoPush.getInstance().keepAlive("b5508f8a848311eabc550242ac130003", "ww")
+//        MisoPush.getInstance().insertTarget("b5508f8a848311eabc550242ac130003", "ww", "tka", "1.1.1")
+//        MisoPush.getInstance().versionCheck("b5508f8a848311eabc550242ac130003")
     }
 
 }

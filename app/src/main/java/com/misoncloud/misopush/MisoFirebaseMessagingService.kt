@@ -7,25 +7,42 @@ import com.google.firebase.messaging.RemoteMessage
 // 요녀석을 misopush를 받을려면 요녀석을 상속해서 사용 해야합니다. ~
 open class MisoFirebaseMessagingService : FirebaseMessagingService() {
 
+    var misoFirebaseInterface:MisoFirebaseInterface
+        get() {
+            return misoFirebaseInterface;
+        }
+        set(value) {
+            misoFirebaseInterface = value
+        }
 
     // 디바이스토큰 수신
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
-        // 던질때 필요한게 앱 아이디랑 유저키 디바이스토큰 os 버전아이디
-        // 못구하는건 앱아이디, 유저키
-        // 앱아이디가 없으면 던지는게 무의미한뎅
+//        유저키도 우리가 만드는게 아니다잉
+//        MisoPush.getInstance().insertTarget(appId, userKey, deviceToken, version)
 
     }
 
     // 메세지 수신
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
-        // 미소서버로 일단 수신완료 날리기 ~
-        // 이건 쌉가능 ~
 
+        var messageKey = p0.data.get("messageKey")
 
+        if(messageKey.equals("onKeepAlive")){
+            MisoPush.getInstance().keepAlive("appId", "dtk")
+            misoFirebaseInterface.onKeepAlive("")// deviceToken 쓰자
+        }else {
 
+            // 1. messageKey = {"misoMessageKey" : "messagekey", "dataMessageKey" : "messageKey" }
+            // 2. messageKey = {"misoMessageKey" : "messagekey", "dataMessageKey" : "" }
+            // 사용자가 key값을 messageKey를 쓰면 1번으로 넘어오고
+            // 사용자가 key값을 messageKey를 안쓰면 2번으로 넘어옵니다.
+            MisoPush.getInstance().onRecvPush("",messageKey.toString())
+            p0.data.remove("messageKey")
+            misoFirebaseInterface.onMisoMessageReceived(p0.data)
 
+        }
     }
 
 

@@ -1,5 +1,6 @@
 package com.misoncloud.misopush
 
+import com.misoncloud.misopush.controller.CheckControllerInterface
 import com.misoncloud.misopush.controller.RequestMessageControllerInterface
 import com.misoncloud.misopush.controller.SampleControllerInterface
 import com.misoncloud.misopush.controller.TargetControllerInterface
@@ -36,6 +37,7 @@ class WebClient private constructor() {
     var mRetrofit: Retrofit
     var mSampleControllerInterface: SampleControllerInterface
     var mTargetControllerInterface: TargetControllerInterface
+    var mCheckControllerInterface: CheckControllerInterface
     var mRequestMessageControllerInterface: RequestMessageControllerInterface
 
     init {
@@ -60,7 +62,9 @@ class WebClient private constructor() {
 
         mSampleControllerInterface = mRetrofit.create()
         mTargetControllerInterface = mRetrofit.create()
+        mCheckControllerInterface = mRetrofit.create()
         mRequestMessageControllerInterface = mRetrofit.create()
+
 
     }
 
@@ -70,6 +74,10 @@ class WebClient private constructor() {
 
     fun getTargetController(): TargetControllerInterface {
         return mTargetControllerInterface
+    }
+
+    fun getCheckControllerInterface(): CheckControllerInterface {
+        return mCheckControllerInterface
     }
 
     fun getRequestMessageControllerInterface(): RequestMessageControllerInterface {

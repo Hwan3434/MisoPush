@@ -13,4 +13,16 @@ interface TargetControllerInterface {
     ) : Single<TargetSaveModel>
 
 
+    @POST("target/delete/device.vsj")
+    fun targetDeleteDevice(
+        @Body param:TargetSaveModel
+    ) : Single<TargetSaveModel>
+
+    @POST("target/update/devicetoken.vsj")
+    fun targetUpdateDevicetoken(
+        @Body param:TargetSaveModel
+    ) : Single<TargetSaveModel>
+
+
+
 }

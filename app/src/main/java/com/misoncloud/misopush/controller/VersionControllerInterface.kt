@@ -1,18 +1,18 @@
 package com.misoncloud.misopush.controller
 
-import com.misoncloud.misopush.model.sample.SampleJsonModel
+import com.misoncloud.misopush.model.version.AppVersionApiRequestModel
+import com.misoncloud.misopush.model.version.AppVersionHistoryModel
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 interface VersionControllerInterface {
 
 
-    @GET("version/check.vsj")
-    fun requestContributors(
-        @Path("owner") owner:String,
-        @Path("repo") repo:String
-    ) : Single<Array<SampleJsonModel>>
+    @POST("version/check.vsj")
+    fun versionCheck(
+        @Body param:AppVersionApiRequestModel
+    ) : Single<AppVersionHistoryModel>
 
 
 
