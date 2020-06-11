@@ -18,7 +18,7 @@ open class MisoFirebaseMessagingService : FirebaseMessagingService() {
     override fun onMessageReceived(p0: RemoteMessage) {
         super.onMessageReceived(p0)
 
-        var messageKey = p0.data.get("messageKey")
+        var messageKey = p0.data.get("message_key")
 
         if(messageKey.equals("onKeepAlive")){
             MisoPush.getInstance().keepAlive("appId")
@@ -29,7 +29,7 @@ open class MisoFirebaseMessagingService : FirebaseMessagingService() {
             // 2. messageKey = {"misoMessageKey" : "messagekey", "dataMessageKey" : "" }
             // 사용자가 key값을 messageKey를 쓰면 1번으로 넘어오고
             // 사용자가 key값을 messageKey를 안쓰면 2번으로 넘어옵니다.
-            MisoPush.getInstance().onRecvPush("",messageKey.toString())
+            MisoPush.getInstance().onRecvPush("test",messageKey.toString())
             p0.data.remove("messageKey")
             onMisoMessageReceived(messageKey.toString(), p0.data)
 
